@@ -41,10 +41,34 @@ insert into PATIENT (PatientFName, PatientLName, PatientDOB, PatientGender) valu
 insert into PATIENT (PatientFName, PatientLName, PatientDOB, PatientGender) values ('Allan', 'Cracker', '3/27/2004', 'M');
 insert into PATIENT (PatientFName, PatientLName, PatientDOB, PatientGender) values ('Drew', 'Lghan', '2/6/1972', 'M');
 
+-- Create a stored procedure to get the ID of a given doctor,  with DoctorFName and DoctorLName as input parameters and DoctorID as an OUTPUT parameter.
 
-insert into VISIT (DoctorID, PatientID, VisitDate) values (3, 3, '1990-12-30 04:09:31');
-insert into VISIT (DoctorID, PatientID, VisitDate) values (1, 5, '1999-09-17 12:09:07');
-insert into VISIT (DoctorID, PatientID, VisitDate) values (4, 1, '2003-09-11 22:41:35');
-insert into VISIT (DoctorID, PatientID, VisitDate) values (1, 3, '1994-06-03 04:59:00');
-insert into VISIT (DoctorID, PatientID, VisitDate) values (3, 4, '1992-06-12 11:19:08');
+CREATE PROCEDURE uspFindDoctorID
+@DoctorFName varchar(25),
+@DoctorLName varchar(25)
+AS
+DECLARE @Res INT
 
+BEGIN TRAN T1
+
+SET @Res = (SELECT DoctorID FROM DOCTOR
+WHERE DoctorFName = @DoctorFName AND DoctorLName = @DoctorLName)
+
+RETURN @Res
+
+
+-- 6) Create a stored procedure to get the ID of a given patient, with PatientFName, PatientLName, and PatientDOB as input parameters and PatientID as an OUTPUT parameter.
+
+CREATE PROCEDURE uspFindPatientID
+@PatientFName varchar(25),
+@PatientLName varchar(25),
+@PatientDOB DATE
+AS
+DECLARE @Res INT
+
+BEGIN TRAN T1
+SET @Res = (SELECT PatientID FROM PATIENT
+            WHERE PatientFName = @PatientFName AND PatientLName = @PatientLName AND PatientDOB = @PatientDOB)
+RETURN @Res
+
+-- 7) Create a stored procedure to populate the transactional table that tracks visits between doctors and patients with DoctorFName, DoctorLName, PatientFName, PatientLName, PatientDOB and VisitDate as input parameters. This stored procedure should nest the other two stored procedures to get doctor and patient IDs, then insert a single record in an explicit transaction.
