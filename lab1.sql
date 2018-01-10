@@ -72,3 +72,25 @@ SET @Res = (SELECT PatientID FROM PATIENT
 RETURN @Res
 
 -- 7) Create a stored procedure to populate the transactional table that tracks visits between doctors and patients with DoctorFName, DoctorLName, PatientFName, PatientLName, PatientDOB and VisitDate as input parameters. This stored procedure should nest the other two stored procedures to get doctor and patient IDs, then insert a single record in an explicit transaction.
+
+CREATE PROCEDURE uspPopulateVisits
+@DFName varchar(25),
+@DLName varchar(25),
+@PFName varchar(25),
+@PLName varchar(25),
+@PDOB varchar(25),
+@VDate DATETIME
+
+AS BEGIN TRAN T1
+EXEC @PatientID = uspFindPatientID @PatientFName = @PFName, @PatientLName = @PLName, @PatientDOB =@PDOB OUTPUT
+
+EXEC @DoctorID = uspFindDoctorID @DoctorFName = @DFName, @DoctorLName = @DLName OUTPUT
+
+INSERT INTO VISIT(DoctorID, PatientID, VisitDate) VALUES(@DoctorID, @PatientID, @VDate)
+
+IF @@ERROR <> 0
+	ROLLBACK TRAN
+ELSE
+	COMMIT TRAN
+GO
+
