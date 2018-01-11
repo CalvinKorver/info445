@@ -25,7 +25,7 @@ CREATE TABLE PATIENT(
 CREATE TABLE VISIT(
     VisitID INT IDENTITY(1,1) primary key not null,
     DoctorID INT FOREIGN KEY REFERENCES DOCTOR(DoctorID) not null,
-    PatientID INT FOREIGN KEY REFERENCES PATIENT(PatiendID) not null,
+    PatientID INT FOREIGN KEY REFERENCES PATIENT(PatientID) not null,
     VisitDate DATETIME not null
 )
 
@@ -81,7 +81,11 @@ CREATE PROCEDURE uspPopulateVisits
 @PDOB varchar(25),
 @VDate DATETIME
 
-AS BEGIN TRAN T1
+AS 
+DECLARE PatientID INT
+DECLARE DoctorID INT
+
+BEGIN TRAN T1
 EXEC @PatientID = uspFindPatientID @PatientFName = @PFName, @PatientLName = @PLName, @PatientDOB =@PDOB OUTPUT
 
 EXEC @DoctorID = uspFindDoctorID @DoctorFName = @DFName, @DoctorLName = @DLName OUTPUT
