@@ -1,0 +1,16 @@
+Database Mirroring
+-	High availability
+-	Synchronous data transfer between two nodes that 
+-	We do this with 2 phase commits
+-	Mission critical database
+-	Willing to accept data loss (theoretically) over availability
+o	Gmail Service
+
+
+Replication
+-	Tool to filter
+-	Write Only 
+
+Log Shipping
+-	We don’t have to manage the filter
+-	Read Only

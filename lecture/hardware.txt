@@ -1,0 +1,47 @@
+Hardware Considerations
+
+RAID Systems
+1. RAID 0
+    - Disk Striping
+        - When we write one activity across many disks, which is writing in parallel
+        - Kind of like buying one box of large pizza instead of a bunch of smaller
+    - Great performance
+    - Lousy fault tolerance
+    - Great disk cost- efficiency
+
+2. RAID 1
+    - Good performance
+    - Better fault tolerance
+    - Fair disk cost-efficiency (N / 2)
+
+3. RAID 5
+    - Striping + parity
+    - Fair performance
+    - Fair fault tolerance
+    - Good disk cost efficiency
+    - ** We do not really like this **
+
+4. RAID 1 + 0
+    - Mirroring + Striping
+    - Good performance & fault tolerance
+    - Okay disc cost efficiency
+
+------
+
+
+Maintenance
+
+- Once we define the threats to an environment, we can define "daily tasks" that alleviate or mitigate the risks that will affect our system adversely
+    - Daily backups
+    - Checking error logs
+    - Wiring shift hand-off report
+
+
+GOAL:
+    - Build a routine set of tasks that improve the value of the database environment
+    - Covers all the components
+        - Hardware
+        - Processes
+        - People
+    - Must address the *defined vulnerabilities* with tasks that *proactively reduce* the opportunity for failures to occur
+    - *All maintenance is defined, scheduled and practiced*
